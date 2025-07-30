@@ -11,15 +11,22 @@
             --dark: #1a1a1a;
             --accent: #FF750E;
             --text: #ffffff;
+            --cursor-size: 24px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
             background: linear-gradient(to bottom, #FDED04, #FF750E);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
             color: var(--dark);
-            cursor: default;
+            min-height: 100vh;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%231a1a1a" stroke-width="1.5"><path d="M4 4l16 16M4 20l16-16"/></svg>') 12 12, auto;
+            overflow-x: hidden;
         }
         
         header {
@@ -27,28 +34,70 @@
             text-align: center;
             padding: 2rem 0 6rem;
             clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            position: relative;
+        }
+        
+        .logo-container {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .logo-container::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid transparent;
+            border-radius: 50%;
+            box-sizing: border-box;
+            transition: all 0.4s ease;
+            pointer-events: none;
+        }
+        
+        .logo-container:hover::before {
+            border-color: var(--primary);
+            width: 110%;
+            height: 110%;
         }
         
         .logo {
-            max-width: 200px;
-            margin: 0 auto 2rem;
-            position: relative;
-            transition: transform 0.3s;
-        }
-        
-        .logo img {
             width: 100%;
+            height: auto;
             filter: drop-shadow(0 0 10px var(--primary));
-            transition: all 0.3s;
+            transition: all 0.3s ease-out;
+            transform-origin: center;
         }
         
-        .logo:hover {
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="white" stroke-width="2"><path d="M28 28L4 4M28 4L4 28"/></svg>'), auto;
+        .logo-container:hover {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M4 4l16 16M4 20l16-16"/></svg>') 12 12, auto;
         }
         
-        .logo:hover img {
+        .logo-container:hover .logo {
             filter: drop-shadow(0 0 15px var(--primary)) brightness(1.1);
-            transform: scale(1.05);
+            transform: scale(1.05) rotate(5deg);
+        }
+        
+        .hero h1 {
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .hero p {
+            color: var(--text);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+            animation: fadeIn 1s ease-out;
         }
         
         nav {
@@ -63,28 +112,33 @@
             color: var(--primary);
             text-decoration: none;
             font-weight: bold;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 1.5rem;
             border-radius: 50px;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
         }
         
         nav a:hover {
-            background: rgba(255, 215, 0, 0.2);
-            text-shadow: 0 0 5px var(--primary);
+            text-shadow: 0 0 8px var(--primary);
         }
         
-        .hero h1 {
-            color: var(--primary);
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .hero p {
-            color: var(--text);
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto;
+        nav a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
         }
         
         .games {
@@ -94,59 +148,118 @@
             text-align: center;
         }
         
+        .games h2 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+        }
+        
+        .games-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
         .game-card {
             background: rgba(0, 0, 0, 0.6);
             border: 2px solid var(--primary);
             border-radius: 15px;
             padding: 1.5rem;
-            margin: 1rem;
-            display: inline-block;
-            width: 300px;
             backdrop-filter: blur(5px);
-            transition: transform 0.3s;
-            vertical-align: top;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            flex-direction: column;
         }
         
         .game-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
             border-color: var(--accent);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .game-thumbnail {
+            width: 100%;
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .game-card:hover .game-thumbnail {
+            transform: scale(1.03);
         }
         
         .game-card h3 {
             color: var(--primary);
-            margin-top: 0;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
         }
         
         .game-card p {
             color: var(--text);
-            min-height: 60px;
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
         }
         
-        .game-card a {
-            display: inline-block;
+        .play-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
             background: var(--primary);
             color: var(--dark);
-            padding: 0.7rem 1.5rem;
+            padding: 0.8rem 1.5rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: bold;
-            margin-top: 1rem;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            align-self: center;
         }
         
-        .game-card a:hover {
+        .play-button:hover {
             background: var(--accent);
-            transform: scale(1.05);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4);
         }
         
         .no-games {
             color: var(--text);
             font-size: 1.5rem;
             padding: 2rem;
-            display: inline-block;
+            grid-column: 1 / -1;
             background: rgba(0, 0, 0, 0.5);
             border-radius: 15px;
+        }
+        
+        .no-games i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .about-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+        
+        .about-section h2 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .about-section p {
+            color: var(--text);
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
         }
         
         footer {
@@ -157,76 +270,113 @@
             color: var(--text);
         }
         
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.2rem;
+            .logo-container {
+                width: 150px;
+                height: 150px;
             }
             
-            .game-card {
-                width: 100%;
-                margin: 1rem 0;
+            .hero h1 {
+                font-size: 2.2rem;
+                line-height: 1.2;
+            }
+            
+            nav {
+                gap: 1rem;
+            }
+            
+            nav a {
+                padding: 0.5rem 1rem;
+            }
+            
+            .games-container {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">
-            <img src="logo.png" alt="Light Eye Studio">
+        <div class="logo-container">
+            <img src="logo.png" alt="Light Eye Studio" class="logo">
         </div>
         <h1 class="hero">Light Eye Studio</h1>
         <p class="hero">Creating immersive Roblox experiences</p>
         <nav>
             <a href="#games">Our Games</a>
             <a href="https://www.roblox.com/groups/861265110" target="_blank" rel="noopener noreferrer">Roblox Group</a>
+            <a href="#about">About Us</a>
         </nav>
     </header>
     
     <section id="games" class="games">
-        <h2>Our Games</h2>
-        <div id="games-container">
-            <div class="no-games">Loading games...</div>
+        <h2>Our Creations</h2>
+        <div id="games-container" class="games-container">
+            <!-- Games will load here -->
         </div>
     </section>
     
+    <section id="about" class="about-section">
+        <h2>About We're Studio</h2>
+        <p>We are creating games ONLY in Roblox. XD</p>
+    </section>
+    
     <footer>
-        <!-- Footer content -->
+        <!-- Footer content removed as requested -->
     </footer>
 
     <script>
-        // SAFE MANUAL GAME LIST
-        const studioGames = [
-            {
-                name: "Epic Adventure",
-                description: "Explore fantasy worlds with friends",
-                url: "https://www.roblox.com/games/YOUR_GAME_ID_HERE"
-            },
-            {
-                name: "Survival Island",
-                description: "Build, craft and survive together",
-                url: "https://www.roblox.com/games/YOUR_GAME_ID_HERE"
-            }
-        ];
-
-        function displayGames() {
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mock game data - replace with your actual games
+            const games = [
+                {
+                    name: "Epic Adventure",
+                    description: "Explore magical worlds with friends in this fantasy RPG experience",
+                    url: "https://www.roblox.com/games/YOUR_GAME_ID_HERE",
+                    image: "game1.jpg"
+                },
+                {
+                    name: "Survival Island",
+                    description: "Build, craft and survive together in this tropical adventure",
+                    url: "https://www.roblox.com/games/YOUR_GAME_ID_HERE",
+                    image: "game2.jpg"
+                },
+                {
+                    name: "Space Odyssey",
+                    description: "Embark on an intergalactic journey through the cosmos",
+                    url: "https://www.roblox.com/games/YOUR_GAME_ID_HERE",
+                    image: "game3.jpg"
+                }
+            ];
+            
             const container = document.getElementById('games-container');
             
-            if (!studioGames.length) {
-                container.innerHTML = '<div class="no-games">No games released yet! Join our group for updates.</div>';
+            if (games.length === 0) {
+                container.innerHTML = `
+                    <div class="no-games">
+                        <i class="fas fa-gamepad"></i>
+                        <p>No games released yet! Stay tuned for our upcoming projects.</p>
+                    </div>
+                `;
                 return;
             }
             
-            container.innerHTML = studioGames.map(game => `
+            container.innerHTML = games.map(game => `
                 <div class="game-card">
+                    ${game.image ? `<div class="game-thumbnail" style="background-image: url('${game.image}')"></div>` : ''}
                     <h3>${game.name}</h3>
                     <p>${game.description}</p>
-                    <a href="${game.url}" target="_blank" rel="noopener noreferrer">Play Now</a>
+                    <a href="${game.url}" class="play-button" target="_blank" rel="noopener noreferrer">
+                        Play Now <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             `).join('');
-        }
-
-        // Initialize when page loads
-        window.addEventListener('DOMContentLoaded', displayGames);
+        });
     </script>
 </body>
 </html>
