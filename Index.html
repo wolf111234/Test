@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light Eye Studio | Roblox Games</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FFD700;
+            --dark: #1a1a1a;
+            --accent: #FF750E;
+            --text: #ffffff;
+        }
+        
+        body {
+            background: linear-gradient(to bottom, #FDED04, #FF750E);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--dark);
+            cursor: default;
+        }
+        
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            text-align: center;
+            padding: 2rem 0 6rem;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        
+        .logo {
+            max-width: 200px;
+            margin: 0 auto 2rem;
+            position: relative;
+            transition: transform 0.3s;
+        }
+        
+        .logo img {
+            width: 100%;
+            filter: drop-shadow(0 0 10px var(--primary));
+            transition: all 0.3s;
+        }
+        
+        .logo:hover {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="white" stroke-width="2"><path d="M28 28L4 4M28 4L4 28"/></svg>'), auto;
+        }
+        
+        .logo:hover img {
+            filter: drop-shadow(0 0 15px var(--primary)) brightness(1.1);
+            transform: scale(1.05);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover {
+            background: rgba(255, 215, 0, 0.2);
+            text-shadow: 0 0 5px var(--primary);
+        }
+        
+        .hero h1 {
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .hero p {
+            color: var(--text);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .games {
+            max-width: 1200px;
+            margin: -3rem auto 0;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .game-card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid var(--primary);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem;
+            display: inline-block;
+            width: 300px;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s;
+            vertical-align: top;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .game-card h3 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+        
+        .game-card p {
+            color: var(--text);
+            min-height: 60px;
+        }
+        
+        .game-card a {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--dark);
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .game-card a:hover {
+            background: var(--accent);
+            transform: scale(1.05);
+        }
+        
+        .no-games {
+            color: var(--text);
+            font-size: 1.5rem;
+            padding: 2rem;
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--text);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .game-card {
+                width: 100%;
+                margin: 1rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Light Eye Studio">
+        </div>
+        <h1 class="hero">Light Eye Studio</h1>
+        <p class="hero">Creating immersive Roblox experiences</p>
+        <nav>
+            <a href="#games">Our Games</a>
+            <a href="https://www.roblox.com/groups/861265110" target="_blank" rel="noopener noreferrer">Roblox Group</a>
+        </nav>
+    </header>
+    
+    <section id="games" class="games">
+        <h2>Our Games</h2>
+        <div id="games-container">
+            <div class="no-games">Loading games...</div>
+        </div>
+    </section>
+    
+    <footer>
+        <!-- Footer content -->
+    </footer>
+
+    <script>
+        // SAFE MANUAL GAME LIST
+        const studioGames = [
+            {
+                name: "Epic Adventure",
+                description: "Explore fantasy worlds with friends",
+                url: "https://www.roblox.com/games/YOUR_GAME_ID_HERE"
+            },
+            {
+                name: "Survival Island",
+                description: "Build, craft and survive together",
+                url: "https://www.roblox.com/games/YOUR_GAME_ID_HERE"
+            }
+        ];
+
+        function displayGames() {
+            const container = document.getElementById('games-container');
+            
+            if (!studioGames.length) {
+                container.innerHTML = '<div class="no-games">No games released yet! Join our group for updates.</div>';
+                return;
+            }
+            
+            container.innerHTML = studioGames.map(game => `
+                <div class="game-card">
+                    <h3>${game.name}</h3>
+                    <p>${game.description}</p>
+                    <a href="${game.url}" target="_blank" rel="noopener noreferrer">Play Now</a>
+                </div>
+            `).join('');
+        }
+
+        // Initialize when page loads
+        window.addEventListener('DOMContentLoaded', displayGames);
+    </script>
+</body>
+</html>
